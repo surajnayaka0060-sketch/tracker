@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Money Tracker HUD</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=JetBrains+Mono:wght@300;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,7 +13,7 @@
         <header class="hud-header">
             <button class="back-btn">← BACK</button>
             <div class="header-info">
-                <div class="icon-box">💰</div>
+                <div class="icon-box">📂</div>
                 <div>
                     <h1>Money Tracker</h1>
                     <p>Track income & expenses with HUD-style dashboard</p>
@@ -24,33 +25,78 @@
             <div class="card gold">
                 <div class="tag">● CORE RESERVE</div>
                 <h3>TOTAL BALANCE</h3>
-                <div class="amount">₹350.00</div>
-                <div class="small-icon">📦</div>
+                <div id="totalBalance" class="amount">₹0.00</div>
+                <div class="small-icon">💰</div>
             </div>
             <div class="card green">
                 <div class="tag">● ENERGY IN</div>
                 <h3>MONTHLY INCOME</h3>
-                <div class="amount">₹2,200.00</div>
+                <div id="monthlyIncome" class="amount">₹0.00</div>
                 <div class="small-icon">📈</div>
             </div>
             <div class="card red">
-                <div class="tag">● ENERGY IN</div>
-                <h3>MONTHLY INCOME</h3>
-                <div class="amount">₹2,800.00</div>
+                <div class="tag">● SYSTEM DRAIN</div>
+                <h3>MONTHLY EXPENSES</h3>
+                <div id="monthlyExpense" class="amount">₹0.00</div>
                 <div class="small-icon">📉</div>
             </div>
             <div class="card blue">
                 <div class="tag">● SAFE ZONE</div>
                 <h3>AVAILABLE</h3>
-                <div class="amount">₹130.00</div>
+                <div id="availableBalance" class="amount">₹0.00</div>
                 <div class="small-icon">🛡️</div>
             </div>
         </div>
 
         <div class="action-buttons">
-            <button class="btn-add income">+ ADD INCOME</button>
-            <button class="btn-add expense">— ADD EXPENSE</button>
+            <button class="btn-add income" onclick="openModal('income')">+ ADD INCOME</button>
+            <button class="btn-add expense" onclick="openModal('expense')">— ADD EXPENSE</button>
+        </div>
+
+        <div class="analysis-box">
+            <div class="analysis-header">
+                <h2 class="cyan-text">// MONTHLY ANALYSIS</h2>
+                <select class="hud-select"><option>January 2026</option></select>
+            </div>
+            <div class="analysis-content">
+                <div class="chart-wrap">
+                    <canvas id="donutChart"></canvas>
+                </div>
+                <div id="transactionList" class="transaction-list"></div>
+            </div>
+        </div>
+
+        <div class="target-box">
+            <div class="target-header">
+                <div class="target-title">
+                    <div class="target-icon">🎯</div>
+                    <div>
+                        <h2 class="cyan-text" style="margin:0">// TARGET ACQUISITIONS</h2>
+                        <span class="sub-label">0 ACTIVE OBJECTIVES</span>
+                    </div>
+                </div>
+                <button class="new-target-btn">+ NEW TARGET</button>
+            </div>
+            <div class="target-empty">
+                <div class="big-target-icon">🎯</div>
+                <p class="font-orbitron">NO TARGETS ACQUIRED</p>
+                <p class="sub-label">Initialize your first objective</p>
+            </div>
         </div>
     </div>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <h2 id="modalTitle" class="font-orbitron">NEW ENTRY</h2>
+            <input type="text" id="itemName" placeholder="Item Name">
+            <input type="number" id="itemAmount" placeholder="Amount (₹)">
+            <div class="modal-btns">
+                <button class="confirm-btn" onclick="saveEntry()">DEPLOY</button>
+                <button class="cancel-btn" onclick="closeModal()">ABORT</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
