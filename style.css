@@ -1,0 +1,48 @@
+const habitInput = document.getElementById('habitInput');
+const habitList = document.getElementById('habitList');
+
+// Load habits from LocalStorage on startup
+let habits = JSON.parse(localStorage.getItem('myHabits')) || [];
+
+function renderHabits() {
+    habitList.innerHTML = '';
+    habits.forEach((habit, index) => {
+        const li = document.createElement('li');
+        li.className = 'habit-item';
+        li.innerHTML = `
+            <span class="habit-text ${habit.completed ? 'completed' : ''}">${habit.text}</span>
+            <div class="controls">
+                <button class="check-btn" onclick="toggleHabit(${index})">✓</button>
+                <button class="delete-btn" onclick="deleteHabit(${index})">✕</button>
+            </div>
+        `;
+        habitList.appendChild(li);
+    });
+    localStorage.setItem('myHabits', JSON.stringify(habits));
+}
+
+function addHabit() {
+    const text = habitInput.value.trim();
+    if (text) {
+        habits.push({ text, completed: false });
+        habitInput.value = '';
+        renderHabits();
+    }
+}
+
+function toggleHabit(index) {
+    habits[index].completed = !habits[index].completed;
+    renderHabits();
+}
+
+function deleteHabit(index) {
+    habits.splice(index, 1);
+    renderHabits();
+}
+
+// Allow "Enter" key to add habit
+habitInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') addHabit();
+});
+
+renderHabits();
