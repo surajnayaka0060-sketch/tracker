@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Money Tracker HUD</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -12,8 +12,8 @@
     <div class="hud-container">
         <header class="hud-header">
             <button class="back-btn">← BACK</button>
-            <div class="header-info">
-                <div class="icon-box">💰</div>
+            <div class="header-main">
+                <div class="app-icon">💰</div>
                 <div>
                     <h1>Money Tracker</h1>
                     <p>Track income & expenses with HUD-style dashboard</p>
@@ -21,93 +21,72 @@
             </div>
         </header>
 
+        <div class="status-report-header">
+            <div class="status-icon">📉</div>
+            <div>
+                <h2>// STATUS REPORT</h2>
+                <p>SECTOR C • SYSTEMS</p>
+            </div>
+        </div>
+
         <div class="status-grid">
-            <div class="card gold">
+            <div class="card card-gold">
                 <div class="tag">● CORE RESERVE</div>
                 <h3>TOTAL BALANCE</h3>
-                <div id="totalBalance" class="amount">₹350.00</div>
-                <div class="card-icon">💳</div>
+                <div class="amount" id="totalBalance">₹350.00</div>
+                <div class="card-footer-icon">💳</div>
             </div>
-            <div class="card green">
+            <div class="card card-green">
                 <div class="tag">● ENERGY IN</div>
                 <h3>MONTHLY INCOME</h3>
-                <div id="monthlyIncome" class="amount">₹2,200.00</div>
-                <div class="card-icon">📈</div>
+                <div class="amount" id="monthlyIncome">₹2,200.00</div>
+                <div class="card-footer-icon">📈</div>
             </div>
-            <div class="card red">
+            <div class="card card-red">
                 <div class="tag">● SYSTEM DRAIN</div>
                 <h3>MONTHLY EXPENSES</h3>
-                <div id="monthlyExpense" class="amount">₹1,850.00</div>
-                <div class="card-icon">📉</div>
+                <div class="amount" id="monthlyExpense">₹1,850.00</div>
+                <div class="card-footer-icon">📉</div>
             </div>
-            <div class="card blue">
+            <div class="card card-blue">
                 <div class="tag">● SAFE ZONE</div>
                 <h3>AVAILABLE</h3>
-                <div id="availableBalance" class="amount">₹130.00</div>
-                <div class="card-icon">🛡️</div>
+                <div class="amount" id="availableBalance">₹130.00</div>
+                <div class="card-footer-icon">🛡️</div>
             </div>
         </div>
 
         <div class="action-buttons">
-            <button class="btn-add income-btn" onclick="openModal('income')">+ ADD INCOME</button>
-            <button class="btn-add expense-btn" onclick="openModal('expense')">— ADD EXPENSE</button>
+            <button class="btn btn-income" onclick="openModal('income')">+ ADD INCOME</button>
+            <button class="btn btn-expense" onclick="openModal('expense')">— ADD EXPENSE</button>
         </div>
 
-        <div class="analysis-card">
+        <div class="analysis-box">
             <div class="analysis-header">
-                <h2 class="cyan-text">// MONTHLY ANALYSIS</h2>
-                <select id="monthSelect" class="hud-select">
-                    <option>January 2026</option>
-                </select>
+                <h2>// MONTHLY ANALYSIS</h2>
+                <select class="hud-select"><option>January 2026</option></select>
             </div>
-            <div class="analysis-content">
-                <div class="chart-area">
-                    <canvas id="donutChart"></canvas>
-                </div>
-                <div id="transactionList" class="transaction-list">
-                    </div>
-            </div>
-        </div>
-
-        <div class="target-card">
-            <div class="target-header">
-                <div class="target-title">
-                    <div class="target-icon">🎯</div>
-                    <div>
-                        <h2 class="cyan-text" style="margin:0">// TARGET ACQUISITIONS</h2>
-                        <span class="sub-text">0 ACTIVE OBJECTIVES</span>
-                    </div>
-                </div>
-                <button class="btn-new-target">+ NEW TARGET</button>
-            </div>
-            <div class="target-empty">
-                <div class="target-big-icon">🎯</div>
-                <p class="font-orbitron">NO TARGETS ACQUIRED</p>
-                <p class="sub-text">Initialize your first objective</p>
+            <div class="analysis-flex">
+                <div class="chart-container"><canvas id="donutChart"></canvas></div>
+                <div class="transaction-list" id="transactionList"></div>
             </div>
         </div>
     </div>
 
-    <div id="modal" class="modal">
+    <div id="modal" class="modal-overlay">
         <div class="modal-box">
             <div class="modal-header">
                 <h2 id="modalTitle">+ New Income</h2>
-                <button class="close-x" onclick="closeModal()">✕</button>
+                <button onclick="closeModal()">✕</button>
             </div>
             <div class="modal-body">
                 <label>₹ Amount</label>
-                <input type="number" id="itemAmount" placeholder="0.00">
-                
+                <input type="number" id="amt" placeholder="0.00">
                 <label>🏷️ Category</label>
-                <input type="text" id="itemCategory" placeholder="e.g., Burger, Rent, Salary...">
-                
+                <input type="text" id="cat" placeholder="e.g. Salary, Rent">
                 <label>📅 Date</label>
-                <input type="date" id="itemDate" value="2026-01-05">
-                
-                <label>📝 Note (optional)</label>
-                <textarea id="itemNote" placeholder="Add a note..."></textarea>
-                
-                <button id="modalSubmit" class="submit-btn" onclick="saveEntry()">Add Income</button>
+                <input type="date" id="date" value="2026-01-06">
+                <button class="submit-btn" onclick="saveEntry()">Deploy Entry</button>
             </div>
         </div>
     </div>
