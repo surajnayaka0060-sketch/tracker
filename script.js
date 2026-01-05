@@ -1,82 +1,69 @@
-let transactions = JSON.parse(localStorage.getItem('walletData')) || [];
-let activeMode = 'income';
+let income = 2200;
+let expenses = [
+  { name: "food", value: 50 },
+  { name: "darma roller", value: 300 },
+  { name: "sleeper", value: 500 },
+  { name: "seed", value: 100 }
+];
 
-// Chart Initialization
-const ctx = document.getElementById('donutChart').getContext('2d');
-let myChart = new Chart(ctx, {
-    type: 'doughnut',
-    data: {
-        datasets: [{
-            data: [1, 1], // Placeholders
-            backgroundColor: ['#10b981', '#ef4444'],
-            borderWidth: 0,
-            hoverOffset: 10
-        }]
-    },
-    options: { cutout: '80%', plugins: { legend: { display: false } } }
-});
+const incomeEl = document.getElementById("income");
+const expenseEl = document.getElementById("expenses");
+const balanceEl = document.getElementById("balance");
+const availableEl = document.getElementById("available");
+const listEl = document.getElementById("expense-list");
 
-function openModal(mode) {
-    activeMode = mode;
-    const title = document.getElementById('modalTitle');
-    const btn = document.getElementById('modalSubmit');
-    
-    title.innerText = mode === 'income' ? '+ New Income' : '— New Expense';
-    title.style.color = mode === 'income' ? '#10b981' : '#ef4444';
-    btn.style.backgroundColor = mode === 'income' ? '#10b981' : '#ef4444';
-    btn.innerText = mode === 'income' ? 'Add Income' : 'Add Expense';
-    
-    document.getElementById('modal').style.display = 'block';
+function updateUI() {
+  const totalExpenses = expenses.reduce((a, b) => a + b.value, 0);
+  const balance = income - totalExpenses;
+
+  incomeEl.textContent = `₹${income}`;
+  expenseEl.textContent = `₹${totalExpenses}`;
+  balanceEl.textContent = `₹${balance}`;
+  availableEl.textContent = `₹${balance}`;
+
+  listEl.innerHTML = "";
+  expenses.forEach(e => {
+    const div = document.createElement("div");
+    div.className = "item";
+    div.innerHTML = `<span>${e.name}</span><span>-₹${e.value}</span>`;
+    listEl.appendChild(div);
+  });
+
+  drawDonut();
 }
 
-function closeModal() { document.getElementById('modal').style.display = 'none'; }
-
-function saveEntry() {
-    const amount = parseFloat(document.getElementById('itemAmount').value);
-    const category = document.getElementById('itemCategory').value;
-    const date = document.getElementById('itemDate').value;
-    
-    if (amount && category) {
-        transactions.push({ amount, category, date, type: activeMode });
-        localStorage.setItem('walletData', JSON.stringify(transactions));
-        updateDashboard();
-        closeModal();
-    }
+function addIncome() {
+  const val = prompt("Enter income amount:");
+  if (!val) return;
+  income += parseInt(val);
+  updateUI();
 }
 
-function updateDashboard() {
-    const list = document.getElementById('transactionList');
-    list.innerHTML = '';
-    let inc = 0, exp = 0;
-
-    transactions.forEach((t, i) => {
-        if (t.type === 'income') inc += t.amount; else exp += t.amount;
-        
-        list.innerHTML += `
-            <div class="transaction-item" onclick="deleteT(${i})">
-                <div>
-                    <strong>${t.category}</strong><br>
-                    <small style="color:#5c6370">${t.date}</small>
-                </div>
-                <div style="font-weight:bold; color:${t.type === 'income' ? '#10b981' : '#ef4444'}">
-                    ${t.type === 'income' ? '+' : '-'}₹${t.amount}
-                </div>
-            </div>`;
-    });
-
-    document.getElementById('monthlyIncome').innerText = `₹${inc}`;
-    document.getElementById('monthlyExpense').innerText = `₹${exp}`;
-    document.getElementById('totalBalance').innerText = `₹${inc - exp}`;
-    document.getElementById('availableBalance').innerText = `₹${inc - exp}`;
-
-    myChart.data.datasets[0].data = [inc || 1, exp || 1];
-    myChart.update();
+function addExpense() {
+  const name = prompt("Expense name:");
+  const val = prompt("Amount:");
+  if (!name || !val) return;
+  expenses.push({ name, value: parseInt(val) });
+  updateUI();
 }
 
-function deleteT(index) {
-    transactions.splice(index, 1);
-    localStorage.setItem('walletData', JSON.stringify(transactions));
-    updateDashboard();
+function drawDonut() {
+  const canvas = document.getElementById("donut");
+  const ctx = canvas.getContext("2d");
+  const total = expenses.reduce((a, b) => a + b.value, 0);
+
+  let start = -0.5 * Math.PI;
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  expenses.forEach(e => {
+    const slice = (e.value / total) * Math.PI * 2;
+    ctx.beginPath();
+    ctx.strokeStyle = "#94a3b8";
+    ctx.lineWidth = 24;
+    ctx.arc(110, 110, 80, start, start + slice);
+    ctx.stroke();
+    start += slice;
+  });
 }
 
-updateDashboard();
+updateUI();
