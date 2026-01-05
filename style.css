@@ -1,72 +1,96 @@
 :root {
-    --bg: #05060a;
-    --card-bg: rgba(13, 17, 23, 0.9);
+    --bg: #05070a;
+    --card-bg: #0d111a;
     --gold: #ffb800;
-    --green: #00f2ff;
-    --red: #ff4d4d;
-    --blue: #00d1ff;
+    --green: #10b981;
+    --red: #ef4444;
+    --cyan: #00f2ff;
     --border: rgba(255, 255, 255, 0.08);
 }
 
 body {
     background-color: var(--bg);
     color: white;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Inter', sans-serif;
     margin: 0; padding: 20px;
 }
 
-.hud-container { max-width: 1000px; margin: 0 auto; }
+.hud-container { max-width: 900px; margin: 0 auto; }
 
-/* Header & Typography */
-h1 { font-family: 'Orbitron'; font-size: 22px; margin: 0; }
-.cyan-text { color: var(--green); font-family: 'Orbitron'; font-size: 14px; letter-spacing: 2px; }
-.sub-label { font-size: 10px; color: #5c6370; }
-
-/* Status Cards */
-.status-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 25px; }
+/* 1. HOVER GLOW EFFECT */
 .card {
     background: var(--card-bg);
     border: 1px solid var(--border);
-    padding: 18px; border-radius: 10px; position: relative;
-    transition: 0.3s ease;
+    padding: 20px; border-radius: 12px;
+    position: relative; transition: 0.3s ease;
 }
-.card:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.2); }
 
-.gold { border-left: 3px solid var(--gold); }
-.green { border-left: 3px solid var(--green); }
-.red { border: 1px solid var(--red); background: rgba(255, 77, 77, 0.03); }
-.blue { border-left: 3px solid var(--blue); }
-
-.amount { font-size: 22px; font-weight: bold; margin-top: 5px; }
-.gold .amount { color: var(--gold); }
-.green .amount { color: var(--green); }
-.red .amount { color: var(--red); }
-.blue .amount { color: var(--blue); }
-
-/* Buttons */
-.action-buttons { display: flex; gap: 15px; margin-bottom: 30px; }
-.btn-add {
-    flex: 1; padding: 14px; border-radius: 8px; font-family: 'Orbitron';
-    cursor: pointer; transition: 0.3s; background: transparent;
+.card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(255, 255, 255, 0.3);
 }
-.income { border: 1px solid #143a3d; color: var(--green); }
-.expense { border: 1px solid #3d1414; color: var(--red); }
-.btn-add:hover { background: rgba(255,255,255,0.05); box-shadow: 0 0 15px currentColor; }
 
-/* Target Section */
-.target-box { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 25px; }
-.target-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-.target-title { display: flex; gap: 15px; align-items: center; }
-.target-icon { padding: 8px; border: 1px solid var(--blue); border-radius: 8px; box-shadow: 0 0 10px var(--blue); }
-.new-target-btn { background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: white; padding: 8px 15px; border-radius: 6px; font-size: 10px; font-family: 'Orbitron'; cursor: pointer; }
+/* Specific glows from your screenshot */
+.gold:hover { box-shadow: 0 0 20px rgba(255, 184, 0, 0.2); }
+.green:hover { box-shadow: 0 0 20px rgba(16, 185, 129, 0.2); }
+.red:hover { box-shadow: 0 0 20px rgba(239, 68, 68, 0.2); }
+.blue:hover { box-shadow: 0 0 20px rgba(0, 242, 255, 0.2); }
+
+.tag { font-size: 10px; font-weight: bold; margin-bottom: 8px; opacity: 0.7; }
+.amount { font-family: 'Orbitron'; font-size: 22px; }
+
+/* 2. TRANSACTION LIST (Like Screenshot 3) */
+.transaction-item {
+    background: rgba(255, 255, 255, 0.03);
+    margin-bottom: 10px; padding: 15px;
+    border-radius: 10px; display: flex;
+    justify-content: space-between; align-items: center;
+    transition: 0.3s; cursor: pointer;
+}
+
+.transaction-item:hover {
+    background: rgba(255, 255, 255, 0.07);
+    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.05);
+}
+
+/* 3. TARGET SECTION */
+.target-card {
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: 16px; padding: 24px; margin-top: 20px;
+}
 
 .target-empty {
-    border: 2px dashed rgba(255,255,255,0.05); border-radius: 12px;
-    padding: 40px; text-align: center; opacity: 0.5;
+    border: 2px dashed rgba(255, 255, 255, 0.1);
+    border-radius: 12px; padding: 40px;
+    text-align: center; margin-top: 20px;
 }
 
-/* Modal Styling */
-.modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 100; }
-.modal-content { background: var(--bg); border: 1px solid var(--green); width: 320px; margin: 15% auto; padding: 30px; border-radius: 15px; }
-input { width: 100%; padding: 12px; margin: 10px 0; background: #0d1117; border: 1px solid var(--border); color: white; box-sizing: border-box; }
-.confirm-btn { width: 100%; background: var(--green); color: black; border: none; padding: 12px; font-family: 'Orbitron'; font-weight: bold; cursor: pointer; }
+/* 4. POPUP / MODAL (Like Screenshot 4) */
+.modal {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(8px);
+    z-index: 1000;
+}
+
+.modal-box {
+    background: #161b26; border-radius: 20px;
+    width: 90%; max-width: 400px;
+    margin: 50px auto; padding: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.modal-header h2 { color: var(--green); margin: 0; font-size: 1.2rem; }
+
+.modal-body label { display: block; font-size: 12px; margin: 15px 0 5px; color: #8b949e; }
+
+.modal-body input, .modal-body textarea {
+    width: 100%; background: #0d111a; border: 1px solid #30363d;
+    padding: 12px; color: white; border-radius: 8px; box-sizing: border-box;
+}
+
+.submit-btn {
+    width: 100%; background: var(--green); color: white;
+    padding: 14px; border-radius: 12px; margin-top: 20px;
+    font-weight: bold; border: none; cursor: pointer;
+}
