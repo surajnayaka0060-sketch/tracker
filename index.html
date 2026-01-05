@@ -3,20 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Habit Tracker</title>
+    <title>Student Habit Vault</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="overlay"></div>
     <div class="container">
         <header>
-            <h1>Daily Habits</h1>
+            <h1 class="glow-text">Habit Vault</h1>
+            <p class="subtitle">Free, local-first productivity utilities.</p>
             <div class="input-group">
-                <input type="text" id="habitInput" placeholder="Enter a new habit...">
-                <button onclick="addHabit()">Add</button>
+                <input type="text" id="habitInput" placeholder="Enter a new mission...">
+                <button onclick="addHabit()">Deploy</button>
             </div>
         </header>
 
-        <ul id="habitList"></ul>
+        <div id="habitList" class="habit-grid"></div>
     </div>
     <script src="script.js"></script>
 </body>

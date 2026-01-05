@@ -1,48 +1,112 @@
-const habitInput = document.getElementById('habitInput');
-const habitList = document.getElementById('habitList');
-
-// Load habits from LocalStorage on startup
-let habits = JSON.parse(localStorage.getItem('myHabits')) || [];
-
-function renderHabits() {
-    habitList.innerHTML = '';
-    habits.forEach((habit, index) => {
-        const li = document.createElement('li');
-        li.className = 'habit-item';
-        li.innerHTML = `
-            <span class="habit-text ${habit.completed ? 'completed' : ''}">${habit.text}</span>
-            <div class="controls">
-                <button class="check-btn" onclick="toggleHabit(${index})">✓</button>
-                <button class="delete-btn" onclick="deleteHabit(${index})">✕</button>
-            </div>
-        `;
-        habitList.appendChild(li);
-    });
-    localStorage.setItem('myHabits', JSON.stringify(habits));
+:root {
+    --bg-dark: #0a0b14;
+    --glass: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --neon-cyan: #00f2ff;
+    --neon-purple: #bd00ff;
+    --text-main: #e2e8f0;
 }
 
-function addHabit() {
-    const text = habitInput.value.trim();
-    if (text) {
-        habits.push({ text, completed: false });
-        habitInput.value = '';
-        renderHabits();
-    }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-dark);
+    background-image: radial-gradient(circle at 50% 50%, #1a1b2e 0%, #0a0b14 100%);
+    color: var(--text-main);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
 }
 
-function toggleHabit(index) {
-    habits[index].completed = !habits[index].completed;
-    renderHabits();
+.container { width: 100%; max-width: 900px; z-index: 1; }
+
+header { text-align: center; margin-bottom: 50px; }
+
+.glow-text {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 3rem;
+    letter-spacing: 4px;
+    background: linear-gradient(to right, var(--neon-cyan), var(--neon-purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 10px;
 }
 
-function deleteHabit(index) {
-    habits.splice(index, 1);
-    renderHabits();
+.subtitle { color: #94a3b8; margin-bottom: 30px; }
+
+.input-group {
+    display: flex;
+    max-width: 500px;
+    margin: 0 auto;
+    gap: 10px;
 }
 
-// Allow "Enter" key to add habit
-habitInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') addHabit();
-});
+input {
+    flex: 1;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    padding: 15px;
+    border-radius: 12px;
+    color: white;
+    backdrop-filter: blur(10px);
+}
 
-renderHabits();
+button {
+    background: linear-gradient(45deg, #00f2ff, #006aff);
+    color: white;
+    border: none;
+    padding: 0 25px;
+    border-radius: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover { transform: translateY(-3px); box-shadow: 0 0 15px var(--neon-cyan); }
+
+/* The Habit Cards Grid */
+.habit-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.habit-item {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    padding: 25px;
+    border-radius: 20px;
+    backdrop-filter: blur(15px);
+    transition: 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 150px;
+}
+
+.habit-item:hover {
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 20px rgba(0, 242, 255, 0.2);
+    transform: translateY(-5px);
+}
+
+.habit-text { font-size: 1.2rem; margin-bottom: 20px; font-weight: 500; }
+.completed { color: #4ade80; text-decoration: line-through; opacity: 0.6; }
+
+.controls { display: flex; gap: 10px; }
+
+.check-btn, .delete-btn {
+    flex: 1;
+    padding: 8px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--glass-border);
+    color: white;
+    cursor: pointer;
+}
+
+.check-btn:hover { background: #22c55e; }
+.delete-btn:hover { background: #ef4444; }
