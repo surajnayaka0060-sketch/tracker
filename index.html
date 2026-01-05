@@ -3,24 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Habit Vault</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;500&display=swap" rel="stylesheet">
+    <title>Money Tracker HUD</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=JetBrains+Mono:wght@300;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="overlay"></div>
-    <div class="container">
-        <header>
-            <h1 class="glow-text">Habit Vault</h1>
-            <p class="subtitle">Free, local-first productivity utilities.</p>
-            <div class="input-group">
-                <input type="text" id="habitInput" placeholder="Enter a new mission...">
-                <button onclick="addHabit()">Deploy</button>
+    <div class="hud-container">
+        <header class="hud-header">
+            <button class="back-btn">← BACK</button>
+            <div class="header-info">
+                <div class="icon-box">💰</div>
+                <div>
+                    <h1>Money Tracker</h1>
+                    <p>Track income & expenses with HUD-style dashboard</p>
+                </div>
             </div>
         </header>
 
-        <div id="habitList" class="habit-grid"></div>
+        <div class="status-grid">
+            <div class="card gold">
+                <div class="tag">● CORE RESERVE</div>
+                <h3>TOTAL BALANCE</h3>
+                <div class="amount">₹350.00</div>
+                <div class="small-icon">📦</div>
+            </div>
+            <div class="card green">
+                <div class="tag">● ENERGY IN</div>
+                <h3>MONTHLY INCOME</h3>
+                <div class="amount">₹2,200.00</div>
+                <div class="small-icon">📈</div>
+            </div>
+            <div class="card red">
+                <div class="tag">● ENERGY IN</div>
+                <h3>MONTHLY INCOME</h3>
+                <div class="amount">₹2,800.00</div>
+                <div class="small-icon">📉</div>
+            </div>
+            <div class="card blue">
+                <div class="tag">● SAFE ZONE</div>
+                <h3>AVAILABLE</h3>
+                <div class="amount">₹130.00</div>
+                <div class="small-icon">🛡️</div>
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <button class="btn-add income">+ ADD INCOME</button>
+            <button class="btn-add expense">— ADD EXPENSE</button>
+        </div>
     </div>
-    <script src="script.js"></script>
 </body>
 </html>
