@@ -2,54 +2,67 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Money Tracker HUD</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>HUD Money Tracker</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link href="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" rel="stylesheet">
+
+  <!-- Chart -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<header class="top-bar">
-  <span class="back">← BACK</span>
-  <h1>Money Tracker</h1>
-  <p class="subtitle">Track income & expenses with HUD-style dashboard</p>
-</header>
+<div class="container">
 
-<section class="cards">
-  <div class="card yellow">
-    <p class="label">• CORE RESERVE</p>
-    <h2 id="balance">₹0</h2>
-  </div>
+  <header class="topbar">
+    <h1>Dashboard</h1>
+    <select class="month-select">
+      <option>January 2026</option>
+      <option>February 2026</option>
+      <option>March 2026</option>
+    </select>
+  </header>
 
-  <div class="card green">
-    <p class="label">• ENERGY IN</p>
-    <h2 id="income">₹0</h2>
-  </div>
+  <section class="stats">
+    <div class="card income">
+      <i data-lucide="trending-up"></i>
+      <p>Income</p>
+      <h2>₹45,000</h2>
+    </div>
 
-  <div class="card red">
-    <p class="label">• SYSTEM DRAIN</p>
-    <h2 id="expenses">₹0</h2>
-  </div>
+    <div class="card expense">
+      <i data-lucide="trending-down"></i>
+      <p>Expenses</p>
+      <h2>₹28,500</h2>
+    </div>
 
-  <div class="card cyan">
-    <p class="label">• SAFE ZONE</p>
-    <h2 id="available">₹0</h2>
-  </div>
-</section>
+    <div class="card balance">
+      <i data-lucide="wallet"></i>
+      <p>Balance</p>
+      <h2>₹16,500</h2>
+    </div>
+  </section>
 
-<section class="actions">
-  <button onclick="addIncome()">+ ADD INCOME</button>
-  <button class="danger" onclick="addExpense()">− ADD EXPENSE</button>
-</section>
+  <section class="analysis card">
+    <h3>Monthly Analysis</h3>
+    <div class="chart-wrap">
+      <canvas id="donut"></canvas>
+      <div id="tooltip" class="tooltip"></div>
+    </div>
+  </section>
 
-<section class="analysis">
-  <h3>// MONTHLY ANALYSIS</h3>
-
-  <div class="analysis-grid">
-    <canvas id="donut" width="220" height="220"></canvas>
-
-    <div id="expense-list" class="list"></div>
-  </div>
-</section>
+</div>
 
 <script src="script.js"></script>
+<script>
+  lucide.createIcons();
+</script>
 </body>
 </html>

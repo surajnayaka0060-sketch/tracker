@@ -1,69 +1,46 @@
-let income = 2200;
-let expenses = [
-  { name: "food", value: 50 },
-  { name: "darma roller", value: 300 },
-  { name: "sleeper", value: 500 },
-  { name: "seed", value: 100 }
-];
+const ctx = document.getElementById('donut');
+const tooltip = document.getElementById('tooltip');
 
-const incomeEl = document.getElementById("income");
-const expenseEl = document.getElementById("expenses");
-const balanceEl = document.getElementById("balance");
-const availableEl = document.getElementById("available");
-const listEl = document.getElementById("expense-list");
+const data = {
+  labels: ['Expenses', 'Remaining'],
+  datasets: [{
+    data: [28500, 16500],
+    backgroundColor: ['#ef4444', '#22d3ee'],
+    borderWidth: 0,
+    hoverOffset: 12
+  }]
+};
 
-function updateUI() {
-  const totalExpenses = expenses.reduce((a, b) => a + b.value, 0);
-  const balance = income - totalExpenses;
+new Chart(ctx, {
+  type: 'doughnut',
+  data,
+  options: {
+    cutout: '70%',
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        enabled: false,
+        external: (context) => {
+          const tooltipModel = context.tooltip;
+          if (!tooltipModel.opacity) {
+            tooltip.style.opacity = 0;
+            return;
+          }
 
-  incomeEl.textContent = `₹${income}`;
-  expenseEl.textContent = `₹${totalExpenses}`;
-  balanceEl.textContent = `₹${balance}`;
-  availableEl.textContent = `₹${balance}`;
+          const value = tooltipModel.dataPoints[0].raw;
+          const label = tooltipModel.dataPoints[0].label;
 
-  listEl.innerHTML = "";
-  expenses.forEach(e => {
-    const div = document.createElement("div");
-    div.className = "item";
-    div.innerHTML = `<span>${e.name}</span><span>-₹${e.value}</span>`;
-    listEl.appendChild(div);
-  });
-
-  drawDonut();
-}
-
-function addIncome() {
-  const val = prompt("Enter income amount:");
-  if (!val) return;
-  income += parseInt(val);
-  updateUI();
-}
-
-function addExpense() {
-  const name = prompt("Expense name:");
-  const val = prompt("Amount:");
-  if (!name || !val) return;
-  expenses.push({ name, value: parseInt(val) });
-  updateUI();
-}
-
-function drawDonut() {
-  const canvas = document.getElementById("donut");
-  const ctx = canvas.getContext("2d");
-  const total = expenses.reduce((a, b) => a + b.value, 0);
-
-  let start = -0.5 * Math.PI;
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  expenses.forEach(e => {
-    const slice = (e.value / total) * Math.PI * 2;
-    ctx.beginPath();
-    ctx.strokeStyle = "#94a3b8";
-    ctx.lineWidth = 24;
-    ctx.arc(110, 110, 80, start, start + slice);
-    ctx.stroke();
-    start += slice;
-  });
-}
-
-updateUI();
+          tooltip.innerHTML = `${label}: ₹${value}`;
+          tooltip.style.opacity = 1;
+          tooltip.style.left = tooltipModel.caretX + 'px';
+          tooltip.style.top = tooltipModel.caretY + 'px';
+        }
+      }
+    },
+    animation: {
+      animateRotate: true,
+      duration: 1200,
+      easing: 'easeOutQuart'
+    }
+  }
+});
