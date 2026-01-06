@@ -31,19 +31,14 @@ body {
 }
 
 .hud-card:hover {
-  box-shadow: 0 0 40px currentColor;
-  transform: translateY(-4px);
+  box-shadow: 0 0 24px currentColor;
+  transform: translateY(-3px);
 }
 
 .yellow { color: #facc15; border-color: #facc15; }
 .green  { color: #22c55e; border-color: #22c55e; }
 .red    { color: #ef4444; border-color: #ef4444; }
 .cyan   { color: #22d3ee; border-color: #22d3ee; }
-
-.hud-card p {
-  margin: 0;
-  opacity: .7;
-}
 
 /* ACTIONS */
 .actions {
@@ -62,25 +57,35 @@ body {
   transition: .25s;
 }
 
+.add:hover {
+  box-shadow: 0 0 18px currentColor;
+}
+
 .add.income { color: #22c55e; border-color: #22c55e; }
 .add.expense { color: #ef4444; border-color: #ef4444; }
 
-.add:hover {
-  box-shadow: 0 0 30px currentColor;
+/* PANEL */
+.panel {
+  background: #050505;
+  border-radius: 22px;
+  padding: 20px;
+  border: 1px solid rgba(255,255,255,.08);
 }
 
-/* MAIN GRID */
-.main-grid {
+.hover-glow:hover {
+  box-shadow: 0 0 22px rgba(239,68,68,.25);
+}
+
+.panel-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 300px 1fr;
   gap: 20px;
 }
 
-.panel {
-  background: #050505;
-  border-radius: 20px;
-  padding: 20px;
-  border: 1px solid rgba(255,255,255,.08);
+/* CHART */
+.chart-box canvas {
+  width: 160px !important;
+  height: 160px !important;
 }
 
 /* TRANSACTIONS */
@@ -97,14 +102,19 @@ body {
   padding: 6px 10px;
 }
 
+.trans-list {
+  max-height: 220px;
+  overflow-y: auto;
+  margin-top: 10px;
+}
+
 .transaction {
-  margin-top: 14px;
-  padding: 14px;
-  border-radius: 14px;
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 12px;
   background: #0a0a0a;
   display: flex;
   justify-content: space-between;
-  cursor: text;
 }
 
 .transaction.income { border-left: 3px solid #22c55e; }
@@ -112,3 +122,29 @@ body {
 
 .pos { color: #22c55e; }
 .neg { color: #ef4444; }
+
+/* MODAL */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.7);
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-box {
+  background: #050505;
+  padding: 20px;
+  border-radius: 18px;
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.modal-box input, .modal-box button {
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+}

@@ -5,13 +5,7 @@
   <title>HUD Money Tracker</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-  <!-- Icons -->
-  <script src="https://unpkg.com/lucide@latest"></script>
-
-  <!-- Chart -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <link rel="stylesheet" href="style.css">
@@ -22,79 +16,64 @@
 
   <!-- TOP CARDS -->
   <div class="top-cards">
-    <div class="hud-card yellow">
-      <p>Core Reserve</p>
-      <h2>₹500</h2>
-    </div>
-
-    <div class="hud-card green">
-      <p>Monthly Income</p>
-      <h2>₹2,300</h2>
-    </div>
-
-    <div class="hud-card red">
-      <p>Monthly Expense</p>
-      <h2>₹1,800</h2>
-    </div>
-
-    <div class="hud-card cyan">
-      <p>Available</p>
-      <h2>₹270</h2>
-    </div>
+    <div class="hud-card yellow"><p>Core Reserve</p><h2>₹500</h2></div>
+    <div class="hud-card green"><p>Income</p><h2>₹2,300</h2></div>
+    <div class="hud-card red"><p>Expense</p><h2>₹1,800</h2></div>
+    <div class="hud-card cyan"><p>Available</p><h2>₹270</h2></div>
   </div>
 
-  <!-- ADD BUTTONS -->
+  <!-- ACTIONS -->
   <div class="actions">
-    <button class="add income">+ Add Income</button>
-    <button class="add expense">− Add Expense</button>
+    <button class="add income" onclick="openModal('income')">+ Add Income</button>
+    <button class="add expense" onclick="openModal('expense')">− Add Expense</button>
   </div>
 
-  <!-- MAIN GRID -->
-  <div class="main-grid">
+  <!-- ANALYSIS + TRANSACTIONS -->
+  <div class="panel hover-glow">
 
-    <!-- ANALYSIS -->
-    <div class="panel">
-      <h3>// Monthly Analysis</h3>
-      <canvas id="donut"></canvas>
-    </div>
+    <div class="panel-grid">
 
-    <!-- TRANSACTIONS -->
-    <div class="panel">
-      <div class="trans-header">
-        <h3>Transactions</h3>
-        <select>
-          <option>January 2026</option>
-          <option>February 2026</option>
-        </select>
+      <!-- CHART -->
+      <div class="chart-box">
+        <h3>// Monthly Expense</h3>
+        <canvas id="donut"></canvas>
       </div>
 
-      <div class="transaction income" contenteditable="true">
-        <span>alrady</span>
-        <span class="pos">+₹1,800</span>
-      </div>
+      <!-- TRANSACTIONS -->
+      <div class="trans-box">
+        <div class="trans-header">
+          <h3>Transactions</h3>
+          <select>
+            <option>January 2026</option>
+            <option>February 2026</option>
+          </select>
+        </div>
 
-      <div class="transaction income" contenteditable="true">
-        <span>ghara</span>
-        <span class="pos">+₹500</span>
-      </div>
-
-      <div class="transaction expense" contenteditable="true">
-        <span>jacket</span>
-        <span class="neg">−₹900</span>
-      </div>
-
-      <div class="transaction expense" contenteditable="true">
-        <span>Mix Seed</span>
-        <span class="neg">−₹100</span>
+        <div class="trans-list">
+          <div class="transaction income"><span>alrady</span><span class="pos">+₹1,800</span></div>
+          <div class="transaction income"><span>ghara</span><span class="pos">+₹500</span></div>
+          <div class="transaction expense"><span>jacket</span><span class="neg">−₹900</span></div>
+          <div class="transaction expense"><span>Mix Seed</span><span class="neg">−₹100</span></div>
+          <div class="transaction expense"><span>Extra</span><span class="neg">−₹50</span></div>
+        </div>
       </div>
 
     </div>
-
   </div>
 
 </div>
 
+<!-- MODAL -->
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <h3 id="modalTitle"></h3>
+    <input type="number" placeholder="Amount">
+    <input type="text" placeholder="Description">
+    <input type="date" id="dateInput">
+    <button onclick="closeModal()">Save</button>
+  </div>
+</div>
+
 <script src="script.js"></script>
-<script>lucide.createIcons()</script>
 </body>
 </html>
