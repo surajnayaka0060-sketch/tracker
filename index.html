@@ -3,14 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <title>HUD Money Tracker</title>
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- Font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Icons -->
-  <link href="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
 
   <!-- Chart -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -19,50 +18,83 @@
 </head>
 <body>
 
-<div class="container">
+<div class="hud">
 
-  <header class="topbar">
-    <h1>Dashboard</h1>
-    <select class="month-select">
-      <option>January 2026</option>
-      <option>February 2026</option>
-      <option>March 2026</option>
-    </select>
-  </header>
-
-  <section class="stats">
-    <div class="card income">
-      <i data-lucide="trending-up"></i>
-      <p>Income</p>
-      <h2>₹45,000</h2>
+  <!-- TOP CARDS -->
+  <div class="top-cards">
+    <div class="hud-card yellow">
+      <p>Core Reserve</p>
+      <h2>₹500</h2>
     </div>
 
-    <div class="card expense">
-      <i data-lucide="trending-down"></i>
-      <p>Expenses</p>
-      <h2>₹28,500</h2>
+    <div class="hud-card green">
+      <p>Monthly Income</p>
+      <h2>₹2,300</h2>
     </div>
 
-    <div class="card balance">
-      <i data-lucide="wallet"></i>
-      <p>Balance</p>
-      <h2>₹16,500</h2>
+    <div class="hud-card red">
+      <p>Monthly Expense</p>
+      <h2>₹1,800</h2>
     </div>
-  </section>
 
-  <section class="analysis card">
-    <h3>Monthly Analysis</h3>
-    <div class="chart-wrap">
+    <div class="hud-card cyan">
+      <p>Available</p>
+      <h2>₹270</h2>
+    </div>
+  </div>
+
+  <!-- ADD BUTTONS -->
+  <div class="actions">
+    <button class="add income">+ Add Income</button>
+    <button class="add expense">− Add Expense</button>
+  </div>
+
+  <!-- MAIN GRID -->
+  <div class="main-grid">
+
+    <!-- ANALYSIS -->
+    <div class="panel">
+      <h3>// Monthly Analysis</h3>
       <canvas id="donut"></canvas>
-      <div id="tooltip" class="tooltip"></div>
     </div>
-  </section>
+
+    <!-- TRANSACTIONS -->
+    <div class="panel">
+      <div class="trans-header">
+        <h3>Transactions</h3>
+        <select>
+          <option>January 2026</option>
+          <option>February 2026</option>
+        </select>
+      </div>
+
+      <div class="transaction income" contenteditable="true">
+        <span>alrady</span>
+        <span class="pos">+₹1,800</span>
+      </div>
+
+      <div class="transaction income" contenteditable="true">
+        <span>ghara</span>
+        <span class="pos">+₹500</span>
+      </div>
+
+      <div class="transaction expense" contenteditable="true">
+        <span>jacket</span>
+        <span class="neg">−₹900</span>
+      </div>
+
+      <div class="transaction expense" contenteditable="true">
+        <span>Mix Seed</span>
+        <span class="neg">−₹100</span>
+      </div>
+
+    </div>
+
+  </div>
 
 </div>
 
 <script src="script.js"></script>
-<script>
-  lucide.createIcons();
-</script>
+<script>lucide.createIcons()</script>
 </body>
 </html>
